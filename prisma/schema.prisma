@@ -13,24 +13,36 @@ datasource db {
 
 model Country {
   id     String @id @default(cuid())
-  code   String @unique // ISO alpha-3, e.g. "THA"
+  code   String @unique
   name   String
-  region String // e.g. "Asia", "Europe"
+  region String
 
-  gdpRecords GdpRecord[]
+  gdpRecords   GdpRecord[]
+  explanations Explanation[]
 }
 
 model GdpRecord {
   id           String @id @default(cuid())
   year         Int
-  gdpUsd       Float? // GDP (current US$)
-  gdpPerCapita Float? // GDP per capita (current US$)
-  gdpGrowthPct Float? // GDP growth (annual %)
+  gdpUsd       Float?
+  gdpPerCapita Float?
+  gdpGrowthPct Float?
 
   countryId String
   country   Country @relation(fields: [countryId], references: [id])
 
   updatedAt DateTime @updatedAt
 
-  @@unique([countryId, year]) // 1 record per country per year, no duplicates
+  @@unique([countryId, year])
+}
+
+model Explanation {
+  id        String   @id @default(cuid())
+  countryId String
+  country   Country  @relation(fields: [countryId], references: [id])
+  language  String
+  content   String
+  createdAt DateTime @default(now())
+
+  @@unique([countryId, language])
 }
