@@ -23,6 +23,7 @@ type CountryData = {
 export default function WorldMap() {
   const [countries, setCountries] = useState<CountryData[]>([]);
   const [selected, setSelected] = useState<CountryData | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetch("/api/countries")
@@ -31,16 +32,52 @@ export default function WorldMap() {
       .catch((err) => console.error("Failed to load country data:", err));
   }, []);
 
-  // geo.id ในไฟล์แผนที่เป็นรหัสตัวเลข (numeric ISO) แต่ database เราเก็บเป็น
-  // alpha-3 (เช่น "THA") — geo.properties.name คือชื่อภาษาอังกฤษที่ตรงกันได้ง่ายกว่า
   function findCountryByGeoName(geoName: string): CountryData | undefined {
     return countries.find(
       (c) => c.name.toLowerCase() === geoName.toLowerCase()
     );
   }
 
+  const suggestions =
+    searchQuery.trim().length > 0
+      ? countries
+          .filter((c) =>
+            c.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+          )
+          .slice(0, 8)
+      : [];
+
+  function handleSelectFromSearch(country: CountryData) {
+    setSelected(country);
+    setSearchQuery("");
+  }
+
   return (
     <div className="w-full flex flex-col gap-4">
+      <div className="relative w-full max-w-md mx-auto">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search country..."
+          className="w-full px-4 py-2 rounded-lg bg-slate-900 text-slate-50 border border-violet-800 focus:outline-none focus:border-violet-500"
+        />
+        {suggestions.length > 0 && (
+          <ul className="absolute z-10 w-full mt-1 bg-slate-900 border border-violet-800 rounded-lg overflow-hidden">
+            {suggestions.map((c) => (
+              <li key={c.code}>
+                <button
+                  onClick={() => handleSelectFromSearch(c)}
+                  className="w-full text-left px-4 py-2 hover:bg-violet-800 text-slate-50 text-sm"
+                >
+                  {c.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       <div className="w-full h-[600px] bg-slate-950 rounded-xl overflow-hidden">
         <ComposableMap projectionConfig={{ scale: 140 }}>
           <Geographies geography={GEO_URL}>
