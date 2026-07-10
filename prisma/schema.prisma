@@ -1,0 +1,36 @@
+// prisma/schema.prisma
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Country {
+  id     String @id @default(cuid())
+  code   String @unique // ISO alpha-3, e.g. "THA"
+  name   String
+  region String // e.g. "Asia", "Europe"
+
+  gdpRecords GdpRecord[]
+}
+
+model GdpRecord {
+  id           String @id @default(cuid())
+  year         Int
+  gdpUsd       Float? // GDP (current US$)
+  gdpPerCapita Float? // GDP per capita (current US$)
+  gdpGrowthPct Float? // GDP growth (annual %)
+
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id])
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([countryId, year]) // 1 record per country per year, no duplicates
+}
