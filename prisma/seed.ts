@@ -1,7 +1,7 @@
 // prisma/seed.ts
 import { prisma } from "../src/lib/prisma";
 
-const YEARS = "2020:2024"; // ช่วงปีที่จะดึงข้อมูล (5 ปีล่าสุด)
+const YEARS = `1990:${new Date().getFullYear()}`; // ย้อนหลังถึงปี 1990
 
 interface WorldBankCountry {
   id: string;
@@ -21,19 +21,44 @@ async function fetchAllCountries(): Promise<WorldBankCountry[]> {
   );
   const json = await res.json();
   const countries: WorldBankCountry[] = json[1];
-  // ตัด "Aggregates" (เช่น World, East Asia & Pacific) ออก เหลือแต่ประเทศจริง
   return countries.filter((c) => c.region.value.trim() !== "Aggregates");
+}
+
+async function fetchIndicatorForRange(
+  indicatorCode: string,
+  range: string
+): Promise<WorldBankIndicatorRecord[]> {
+  const url = `https://api.worldbank.org/v2/country/all/indicator/${indicatorCode}?format=json&per_page=20000&date=${range}`;
+  const res = await fetch(url);
+  const text = await res.text();
+
+  if (text.trim().startsWith("<")) {
+    throw new Error(
+      `World Bank returned non-JSON for ${indicatorCode} (range ${range}): ${text.slice(0, 80)}`
+    );
+  }
+
+  const json = JSON.parse(text);
+  return json[1] ?? [];
 }
 
 async function fetchIndicator(
   indicatorCode: string
 ): Promise<WorldBankIndicatorRecord[]> {
-  const url = `https://api.worldbank.org/v2/country/all/indicator/${indicatorCode}?format=json&per_page=20000&date=${YEARS}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  return json[1] ?? [];
-}
+  const currentYear = new Date().getFullYear();
+  const CHUNK = 8; // ดึงทีละ 8 ปี กัน result ใหญ่เกิน
+  const all: WorldBankIndicatorRecord[] = [];
 
+  for (let start = 1990; start <= currentYear; start += CHUNK) {
+    const end = Math.min(start + CHUNK - 1, currentYear);
+    const range = `${start}:${end}`;
+    console.log(`   - fetching ${indicatorCode} for ${range}...`);
+    const records = await fetchIndicatorForRange(indicatorCode, range);
+    all.push(...records);
+  }
+
+  return all;
+}
 type MergedRecord = {
   countryCode: string;
   year: number;
@@ -63,7 +88,7 @@ function mergeIndicatorInto(
 }
 
 async function main() {
-  console.log("1/4 Fetching country list from World Bank...");
+  console.log(`1/4 Fetching country list from World Bank... (years: ${YEARS})`);
   const countries = await fetchAllCountries();
   console.log(`   Found ${countries.length} countries`);
 
@@ -80,7 +105,7 @@ async function main() {
     });
   }
 
-  console.log("3/4 Fetching GDP indicators (this may take a moment)...");
+  console.log("3/4 Fetching GDP indicators (this may take several minutes)...");
   const [gdpUsd, gdpPerCapita, gdpGrowth] = await Promise.all([
     fetchIndicator("NY.GDP.MKTP.CD"),
     fetchIndicator("NY.GDP.PCAP.CD"),
@@ -94,20 +119,19 @@ async function main() {
 
   console.log(`4/4 Saving ${merged.size} GDP records to database...`);
 
-  // ดึง id จริงในฐานข้อมูลของแต่ละประเทศมาเตรียมไว้ล่วงหน้า กัน query ซ้ำทีละแถว
   const dbCountries = await prisma.country.findMany();
   const codeToId = new Map(dbCountries.map((c) => [c.code, c.id]));
 
   let saved = 0;
   for (const record of merged.values()) {
     const countryId = codeToId.get(record.countryCode);
-    if (!countryId) continue; // ข้ามถ้าไม่ใช่ประเทศที่เราเก็บไว้
+    if (!countryId) continue;
     if (
       record.gdpUsd === null &&
       record.gdpPerCapita === null &&
       record.gdpGrowthPct === null
     ) {
-      continue; // ข้ามถ้าปีนั้นไม่มีข้อมูลอะไรเลย
+      continue;
     }
 
     await prisma.gdpRecord.upsert({
