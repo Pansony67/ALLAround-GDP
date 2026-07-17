@@ -7,8 +7,6 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-console.log("KEY LOADED:", process.env.ANTHROPIC_API_KEY?.slice(0, 20));
-console.log("KEY LENGTH:", process.env.ANTHROPIC_API_KEY?.length);
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
