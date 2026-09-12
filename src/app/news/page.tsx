@@ -1,4 +1,5 @@
 // src/app/news/page.tsx
+import type { Metadata } from "next";
 import { Poiret_One } from "next/font/google";
 import NewsImage from "@/components/NewsImage";
 
@@ -54,6 +55,17 @@ function formatDate(iso: string): string {
     return iso;
   }
 }
+
+export const metadata: Metadata = {
+  title: "News",
+  description:
+    "The latest economy, business and finance headlines from around the world, updated continuously.",
+  openGraph: {
+    title: "News - ALLAround GDP",
+    description:
+      "The latest economy, business and finance headlines from around the world, updated continuously.",
+  },
+};
 
 export default async function NewsPage() {
   const articles = await getNews();

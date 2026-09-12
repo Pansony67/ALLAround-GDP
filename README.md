@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ALLAround GDP
 
-## Getting Started
+An interactive way to explore how the world's economies have grown since 1990.
+Spin a 3D globe, click any country, and see its GDP, growth rate and GDP per
+capita - all from real World Bank data, refreshed automatically every week.
 
-First, run the development server:
+**Live site:** https://all-around-gdp.vercel.app
+
+## What it does
+
+- **Globe** - a 3D globe you can spin and click. Selecting a country pulls up
+  its latest GDP, growth rate and per-capita figures.
+- **History** - GDP trends from 1990 to today, with countries compared side by
+  side on a single chart.
+- **News** - current economy, business and finance headlines.
+- **Games** - *Higher / Lower*, a quick game that asks whether the next
+  country's GDP is higher or lower than the last.
+
+## Tech stack
+
+| Layer    | Choice                                              |
+| -------- | --------------------------------------------------- |
+| Framework| Next.js (App Router) + TypeScript                   |
+| Styling  | Tailwind CSS                                        |
+| Database | Neon Postgres, accessed through Prisma              |
+| Charts   | Recharts                                            |
+| Globe    | react-globe.gl (three.js)                           |
+| Hosting  | Vercel, with a weekly cron job                      |
+
+## Data sources
+
+| Source                                                  | Used for                              |
+| ------------------------------------------------------- | ------------------------------------- |
+| [World Bank Open Data](https://data.worldbank.org/)      | GDP, growth and per-capita figures    |
+| [Currents API](https://currentsapi.services/)            | Economy and business headlines        |
+| [Wikipedia](https://en.wikipedia.org/)                   | Country economy background            |
+| [Natural Earth](https://www.naturalearthdata.com/)       | Map and country boundaries            |
+
+Figures are republished as-is for educational use. For anything official,
+go to the original source.
+
+## Running it locally
+
+Requires Node.js 20+ and a Postgres database (Neon works well, and has a free
+tier).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Pansony67/ALLAround-GDP.git
+cd ALLAround-GDP
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env` file in the project root:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Postgres connection string (Neon, Supabase, local Postgres - anything)
+DATABASE_URL="postgresql://..."
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Optional. Without it, the News page renders empty instead of failing.
+CURRENTS_API_KEY="..."
 
-## Learn More
+# Optional. Powers the AI country explanations.
+ANTHROPIC_API_KEY="..."
 
-To learn more about Next.js, take a look at the following resources:
+# Any random string. Protects the weekly sync endpoint from being
+# triggered by anyone who finds the URL.
+CRON_SECRET="..."
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Then set up the database and start the dev server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npx prisma generate
+npx prisma db push
+npm run dev
+```
 
-## Deploy on Vercel
+Open http://localhost:3000.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## How the data stays current
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`vercel.json` schedules `/api/cron/sync-gdp` to run every Monday at 03:00 UTC.
+That endpoint pulls the latest figures from the World Bank API and upserts them
+into Postgres, so the site never needs manual updating. The endpoint checks
+`CRON_SECRET` before doing anything.
+
+## Project layout
+
+```
+src/
+  app/
+    api/            Route handlers (countries, history, news, explain, cron)
+    explore/        3D globe
+    history/        GDP-over-time charts
+    news/           Headlines
+    games/          Higher / Lower
+    donate/         PayPal + PromptPay
+  components/       Globe, charts, navbar, footer, music player
+  lib/              Prisma client, country codes, flags, Wikipedia links
+prisma/
+  schema.prisma     Country, GdpRecord, Explanation models
+```
+
+## License and credits
+
+Built by [Pannadhorn Rugseree](https://github.com/Pansony67).
+
+This project is a personal/educational build. GDP data belongs to the World
+Bank and is used under their open data terms; news content belongs to its
+respective publishers.

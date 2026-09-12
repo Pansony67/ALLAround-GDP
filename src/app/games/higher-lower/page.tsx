@@ -1,4 +1,5 @@
 // src/app/games/higher-lower/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Poiret_One } from "next/font/google";
 import HigherLowerGame from "@/components/HigherLowerGame";
@@ -8,6 +9,17 @@ const poiretOne = Poiret_One({
   weight: "400",
   variable: "--font-poiret",
 });
+
+export const metadata: Metadata = {
+  title: "Higher / Lower",
+  description:
+    "Guess whether the next country's GDP is higher or lower, and see how long a streak you can build.",
+  openGraph: {
+    title: "Higher / Lower - ALLAround GDP",
+    description:
+      "Guess whether the next country's GDP is higher or lower, and see how long a streak you can build.",
+  },
+};
 
 export default function HigherLowerPage() {
   return (

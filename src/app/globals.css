@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -12,17 +12,40 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* This site is dark on every page (black hero video, galaxy glows), so
+   the palette is fixed rather than following prefers-color-scheme -
+   a light-mode background would fight the artwork, not complement it. */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Was hardcoded to Arial, which silently overrode the Geist font
+     loaded in layout.tsx - every page that did not set its own font
+     inline was rendering in Arial. */
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Smooth anchor scrolling, but respect users who ask for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Consistent, visible keyboard focus. Without this, focus rings on the
+   dark background are nearly invisible, which makes the site hard to
+   navigate by keyboard. */
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Darker, less obtrusive scrollbar so it does not glare against the
+   black pages. */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+  }
 }
 
 @keyframes fade-in-up {
@@ -39,4 +62,21 @@ body {
 .animate-fade-in-up {
   opacity: 0;
   animation: fade-in-up 1s ease-out forwards;
+}
+
+/* Users who prefer reduced motion get the content immediately rather
+   than the entrance animations. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    opacity: 1;
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

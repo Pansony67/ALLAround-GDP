@@ -1,4 +1,5 @@
 // src/app/games/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Orbitron } from "next/font/google";
 
@@ -21,6 +22,17 @@ const GAMES = [
     available: false,
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Games",
+  description:
+    "Test how well you really know the world economy with quick games built on real GDP data.",
+  openGraph: {
+    title: "Games - ALLAround GDP",
+    description:
+      "Test how well you really know the world economy with quick games built on real GDP data.",
+  },
+};
 
 export default function GamesPage() {
   return (

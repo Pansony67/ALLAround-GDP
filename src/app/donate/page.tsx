@@ -1,4 +1,5 @@
 // src/app/donate/page.tsx
+import type { Metadata } from "next";
 import { Poiret_One } from "next/font/google";
 import PromptPayQR from "@/components/PromptPayQR";
 
@@ -7,6 +8,17 @@ const poiretOne = Poiret_One({
   weight: "400",
   variable: "--font-poiret",
 });
+
+export const metadata: Metadata = {
+  title: "Support the Project",
+  description:
+    "ALLAround GDP is free and open. Support the project via PayPal or PromptPay to help keep it running.",
+  openGraph: {
+    title: "Support the Project - ALLAround GDP",
+    description:
+      "ALLAround GDP is free and open. Support the project via PayPal or PromptPay to help keep it running.",
+  },
+};
 
 export default function DonatePage() {
   return (

@@ -1,4 +1,5 @@
 ﻿// src/app/history/page.tsx
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Poiret_One } from "next/font/google";
 import HistoryExplorer from "@/components/HistoryExplorer";
@@ -8,6 +9,17 @@ const poiretOne = Poiret_One({
   weight: "400",
   variable: "--font-poiret",
 });
+
+export const metadata: Metadata = {
+  title: "History",
+  description:
+    "Track how any country's GDP has changed from 1990 to today, and compare economies side by side across 35 years of World Bank data.",
+  openGraph: {
+    title: "History - ALLAround GDP",
+    description:
+      "Track how any country's GDP has changed from 1990 to today, and compare economies side by side across 35 years of World Bank data.",
+  },
+};
 
 export default function HistoryPage() {
   return (

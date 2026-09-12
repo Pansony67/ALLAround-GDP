@@ -1,4 +1,5 @@
 // src/app/explore/page.tsx
+import type { Metadata } from "next";
 import { Poiret_One } from "next/font/google";
 import GlobeMap from "@/components/GlobeMapLazy";
 
@@ -7,6 +8,17 @@ const poiretOne = Poiret_One({
   weight: "400",
   variable: "--font-poiret",
 });
+
+export const metadata: Metadata = {
+  title: "Globe",
+  description:
+    "Spin an interactive 3D globe and click any country to see its GDP, growth rate and GDP per capita, straight from World Bank data.",
+  openGraph: {
+    title: "Globe - ALLAround GDP",
+    description:
+      "Spin an interactive 3D globe and click any country to see its GDP, growth rate and GDP per capita, straight from World Bank data.",
+  },
+};
 
 export default function ExplorePage() {
   return (
