@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Globe", href: "/explore" },
   { label: "Countries", href: "/country" },
+  { label: "Rankings", href: "/rankings" },
   { label: "History", href: "/history" },
   { label: "News", href: "/news" },
   { label: "Games", href: "/games" },
