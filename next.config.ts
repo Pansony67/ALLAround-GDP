@@ -60,14 +60,14 @@ const securityHeaders = [
    `next dev` needs eval() for Fast Refresh and readable stack traces. */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   // https: is required - news image hosts are not known in advance.
   "img-src 'self' data: blob: https:",
   "media-src 'self' blob:",
   "font-src 'self' data:",
   // World Bank + Currents APIs, and unpkg for globe textures/topojson.
-  "connect-src 'self' https://api.worldbank.org https://api.currentsapi.services https://unpkg.com",
+  "connect-src 'self' https://api.worldbank.org https://api.currentsapi.services https://unpkg.com https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com",
   "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "base-uri 'self'",

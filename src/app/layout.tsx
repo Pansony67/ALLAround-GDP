@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MusicPlayer from "@/components/MusicPlayer";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -101,6 +102,7 @@ export default function RootLayout({
         <div className="flex-1">{children}</div>
         <Footer />
         <MusicPlayer />
+        <GoogleAnalytics />
       </body>
     </html>
   );
