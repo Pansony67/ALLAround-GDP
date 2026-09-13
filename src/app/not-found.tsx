@@ -12,7 +12,7 @@ const displayFont = Space_Grotesk({
 export default function NotFound() {
   return (
     <main
-      className={`${displayFont.variable} relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-28 text-center text-white`}
+      className={`${displayFont.variable} relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-28 text-center text-white`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-1/4 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />

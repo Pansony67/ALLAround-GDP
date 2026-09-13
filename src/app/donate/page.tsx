@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default function DonatePage() {
   return (
     <main
-      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       {/* Galaxy glow background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">

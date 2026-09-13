@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MusicPlayer from "@/components/MusicPlayer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import SiteBackground from "@/components/SiteBackground";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -96,6 +97,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-black">
+        {/* Fixed animated backdrop. It sits at z-index -10, so it is
+            behind every page. The home page still paints bg-black on
+            its own <main>, which keeps the hero video in charge there. */}
+        <SiteBackground />
         <Navbar />
         {/* flex-1 keeps the footer at the bottom of short pages instead
             of floating halfway up the screen. */}

@@ -80,3 +80,126 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ---------------------------------------------------------------
+   Site background - rendered by src/components/SiteBackground.tsx
+
+   A single fixed layer behind every page: a faint masked grid for
+   structure, three slow aurora glows for depth, fine grain for
+   texture, and a vignette so the viewport edges stay black.
+
+   Only transform animates, so the compositor handles it and the
+   main thread stays free. The reduced-motion block further down
+   this file already freezes it for users who ask for that.
+
+   The home page keeps bg-black on its <main>, so its hero video and
+   its own glows cover this layer - by design.
+   --------------------------------------------------------------- */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.site-bg > * {
+  position: absolute;
+}
+
+.site-bg__grid {
+  inset: 0;
+  opacity: 0.75;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 68px 68px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #000 30%,
+    transparent 85%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #000 30%,
+    transparent 85%
+  );
+}
+
+.site-bg__glow {
+  border-radius: 9999px;
+  filter: blur(110px);
+  will-change: transform;
+}
+
+.site-bg__glow--1 {
+  left: 8%;
+  top: -10%;
+  width: max(46vw, 320px);
+  height: max(46vw, 320px);
+  background: rgba(147, 51, 234, 0.26);
+  animation: site-bg-drift-1 34s ease-in-out infinite alternate;
+}
+
+.site-bg__glow--2 {
+  right: 4%;
+  top: 30%;
+  width: max(42vw, 300px);
+  height: max(42vw, 300px);
+  background: rgba(37, 99, 235, 0.24);
+  animation: site-bg-drift-2 44s ease-in-out infinite alternate;
+}
+
+.site-bg__glow--3 {
+  left: 30%;
+  bottom: -14%;
+  width: max(38vw, 280px);
+  height: max(38vw, 280px);
+  background: rgba(99, 102, 241, 0.2);
+  animation: site-bg-drift-3 52s ease-in-out infinite alternate;
+}
+
+@keyframes site-bg-drift-1 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(12vw, 8vh, 0) scale(1.18);
+  }
+}
+
+@keyframes site-bg-drift-2 {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(-14vw, -10vh, 0) scale(0.92);
+  }
+}
+
+@keyframes site-bg-drift-3 {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(8vw, -12vh, 0) scale(1.2);
+  }
+}
+
+/* Fine film grain. Keeps the large blurred glows from looking like
+   flat banding on wide screens. */
+.site-bg__grain {
+  inset: 0;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+.site-bg__vignette {
+  inset: 0;
+  background: radial-gradient(
+    ellipse 120% 90% at 50% 40%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
