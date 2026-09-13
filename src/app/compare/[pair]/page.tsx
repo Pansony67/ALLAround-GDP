@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import CompareChart, {
   COMPARE_COLOR_A,
   COMPARE_COLOR_B,
@@ -15,10 +15,9 @@ import {
   type ComparedCountry,
 } from "@/lib/compare";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 /* Head-to-head comparison of two economies.
@@ -159,7 +158,7 @@ export default async function ComparePairPage({
 
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
@@ -180,7 +179,7 @@ export default async function ComparePairPage({
         <header className="mt-8 text-center">
           <h1
             className="text-3xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {codeToFlag(data.a.code)} {data.a.name}
             <span className="mx-3 text-white/40">vs</span>
@@ -226,7 +225,7 @@ export default async function ComparePairPage({
         <section className="mt-14">
           <h2
             className="text-2xl text-white sm:text-3xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             GDP side by side
           </h2>

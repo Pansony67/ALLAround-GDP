@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import CountryGdpChart from "@/components/CountryGdpChart";
 import { codeToFlag } from "@/lib/flag";
 import { wikipediaEconomyUrl } from "@/lib/wikipedia";
@@ -16,10 +16,9 @@ import {
   getCountryPageData,
 } from "@/lib/country-page";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 /* One page per country - the main way this site gets found.
@@ -131,7 +130,7 @@ export default async function CountryPage({
 
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
@@ -158,7 +157,7 @@ export default async function CountryPage({
           </p>
           <h1
             className="mt-3 text-4xl text-white sm:text-6xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             {flag && <span className="mr-3">{flag}</span>}
             {data.name} GDP
@@ -219,7 +218,7 @@ export default async function CountryPage({
         <section className="mt-14">
           <h2
             className="text-2xl text-white sm:text-3xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             GDP over time
           </h2>
@@ -239,7 +238,7 @@ export default async function CountryPage({
           <section className="mt-14">
             <h2
               className="text-2xl text-white sm:text-3xl"
-              style={{ fontFamily: "var(--font-poiret)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               What shaped the {decadeOf(latestYear ?? 0)}s
             </h2>
@@ -253,7 +252,7 @@ export default async function CountryPage({
           <section className="mt-14">
             <h2
               className="text-2xl text-white sm:text-3xl"
-              style={{ fontFamily: "var(--font-poiret)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Other economies in {data.region}
             </h2>

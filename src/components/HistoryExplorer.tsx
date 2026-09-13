@@ -686,7 +686,7 @@ export default function HistoryExplorer() {
             <div className="mx-auto mt-24 max-w-4xl">
               <h3
                 className="mb-10 text-center text-2xl text-white sm:text-3xl"
-                style={{ fontFamily: "var(--font-poiret)" }}
+                style={{ fontFamily: "var(--font-display)" }}
               >
                 The Big Picture
               </h3>
@@ -723,7 +723,7 @@ export default function HistoryExplorer() {
           <div className="mx-auto mt-24 max-w-2xl text-center">
             <h3
               className="text-2xl text-white sm:text-3xl"
-              style={{ fontFamily: "var(--font-poiret)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               Want to go deeper?
             </h3>

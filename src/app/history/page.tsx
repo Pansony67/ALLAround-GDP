@@ -1,13 +1,12 @@
 ﻿// src/app/history/page.tsx
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import HistoryExplorer from "@/components/HistoryExplorer";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
 export default function HistoryPage() {
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       {/* Galaxy glow background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -37,7 +36,7 @@ export default function HistoryPage() {
         <div className="text-center">
           <h1
             className="text-4xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             The GDP Story
           </h1>

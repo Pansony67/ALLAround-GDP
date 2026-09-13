@@ -1,7 +1,7 @@
 // src/app/rankings/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { codeToFlag } from "@/lib/flag";
 import { formatPct, formatPerCapita, formatUsd } from "@/lib/country-page";
 import {
@@ -10,10 +10,9 @@ import {
   type RankedCountry,
 } from "@/lib/rankings";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 /* Three leaderboards of the world economy.
@@ -109,7 +108,7 @@ function SectionHeading({
     <div className="mb-6">
       <h2
         className="text-2xl text-white sm:text-3xl"
-        style={{ fontFamily: "var(--font-poiret)" }}
+        style={{ fontFamily: "var(--font-display)" }}
       >
         {title}
       </h2>
@@ -128,7 +127,7 @@ export default async function RankingsPage() {
 
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
@@ -139,7 +138,7 @@ export default async function RankingsPage() {
         <header className="text-center">
           <h1
             className="text-4xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             World Economy Rankings
           </h1>

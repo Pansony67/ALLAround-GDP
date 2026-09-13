@@ -1,11 +1,10 @@
 // src/app/not-found.tsx
 import Link from "next/link";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 /* Branded 404. Without this, a mistyped URL falls back to Next's stock
@@ -13,7 +12,7 @@ const poiretOne = Poiret_One({
 export default function NotFound() {
   return (
     <main
-      className={`${poiretOne.variable} relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-28 text-center text-white`}
+      className={`${displayFont.variable} relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-28 text-center text-white`}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-1/4 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
@@ -26,7 +25,7 @@ export default function NotFound() {
         </p>
         <h1
           className="mt-6 text-4xl text-white sm:text-6xl"
-          style={{ fontFamily: "var(--font-poiret)" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Off the map
         </h1>

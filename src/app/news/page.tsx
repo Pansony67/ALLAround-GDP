@@ -1,12 +1,11 @@
 // src/app/news/page.tsx
 import type { Metadata } from "next";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import NewsImage from "@/components/NewsImage";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 type NewsArticle = {
@@ -72,7 +71,7 @@ export default async function NewsPage() {
 
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       {/* Galaxy glow background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -85,7 +84,7 @@ export default async function NewsPage() {
         <div className="text-center">
           <h1
             className="text-4xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Business News
           </h1>

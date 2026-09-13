@@ -1,12 +1,11 @@
 // src/app/donate/page.tsx
 import type { Metadata } from "next";
-import { Poiret_One } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import PromptPayQR from "@/components/PromptPayQR";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
 export default function DonatePage() {
   return (
     <main
-      className={`${poiretOne.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
+      className={`${displayFont.variable} relative min-h-screen bg-black px-6 pb-12 pt-28 text-white sm:px-10`}
     >
       {/* Galaxy glow background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -35,7 +34,7 @@ export default function DonatePage() {
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <h1
           className="text-4xl text-white sm:text-5xl"
-          style={{ fontFamily: "var(--font-poiret)" }}
+          style={{ fontFamily: "var(--font-display)" }}
         >
           Support the Project
         </h1>
@@ -49,7 +48,7 @@ export default function DonatePage() {
           <div className="flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
             <h2
               className="text-2xl"
-              style={{ fontFamily: "var(--font-poiret)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               PayPal
             </h2>
@@ -70,7 +69,7 @@ export default function DonatePage() {
           <div className="flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-sm">
             <h2
               className="text-2xl"
-              style={{ fontFamily: "var(--font-poiret)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               PromptPay
             </h2>

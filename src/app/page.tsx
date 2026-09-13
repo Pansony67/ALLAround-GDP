@@ -1,12 +1,11 @@
 // src/app/page.tsx
 import Link from "next/link";
-import { Poiret_One, Inter } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import RevealOnScroll from "@/components/RevealOnScroll";
 
-const poiretOne = Poiret_One({
+const displayFont = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-poiret",
+  variable: "--font-display",
 });
 
 const inter = Inter({
@@ -45,7 +44,7 @@ const features = [
 export default function HomePage() {
   return (
     <main
-      className={`${poiretOne.variable} ${inter.variable} relative overflow-x-hidden bg-black`}
+      className={`${displayFont.variable} ${inter.variable} relative overflow-x-hidden bg-black`}
       style={{ fontFamily: "var(--font-inter)" }}
     >
       {/* Galaxy glow background for the lower sections */}
@@ -75,7 +74,7 @@ export default function HomePage() {
         <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center">
           <h1
             className="animate-fade-in-up text-5xl text-white sm:text-7xl"
-            style={{ fontFamily: "var(--font-poiret)", animationDelay: "0.2s" }}
+            style={{ fontFamily: "var(--font-display)", animationDelay: "0.2s" }}
           >
             ALLAround GDP
           </h1>
@@ -111,7 +110,7 @@ export default function HomePage() {
         <RevealOnScroll>
           <h2
             className="text-3xl text-white sm:text-4xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             What is ALLAround GDP?
           </h2>
@@ -145,7 +144,7 @@ export default function HomePage() {
         <RevealOnScroll className="mx-auto max-w-4xl text-center">
           <h2
             className="text-3xl text-white sm:text-4xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Built With
           </h2>
@@ -167,7 +166,7 @@ export default function HomePage() {
         <RevealOnScroll>
           <h2
             className="text-3xl text-white sm:text-5xl"
-            style={{ fontFamily: "var(--font-poiret)" }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Ready to explore?
           </h2>
