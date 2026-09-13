@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { label: "Globe", href: "/explore" },
   { label: "Countries", href: "/country" },
   { label: "Rankings", href: "/rankings" },
+  { label: "Compare", href: "/compare" },
   { label: "History", href: "/history" },
   { label: "News", href: "/news" },
   { label: "Games", href: "/games" },

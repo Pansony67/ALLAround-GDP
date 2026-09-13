@@ -1,6 +1,7 @@
 // src/app/sitemap.ts
 import type { MetadataRoute } from "next";
 import { getAllCountrySlugs } from "@/lib/country-page";
+import { getPopularPairs } from "@/lib/compare";
 
 const SITE_URL = "https://all-around-gdp.vercel.app";
 
@@ -17,6 +18,7 @@ const STATIC_ROUTES: Array<{
   { path: "/explore", changeFrequency: "weekly", priority: 0.9 },
   { path: "/country", changeFrequency: "weekly", priority: 0.9 },
   { path: "/rankings", changeFrequency: "weekly", priority: 0.9 },
+  { path: "/compare", changeFrequency: "weekly", priority: 0.8 },
   { path: "/history", changeFrequency: "weekly", priority: 0.8 },
   { path: "/news", changeFrequency: "daily", priority: 0.7 },
   { path: "/games", changeFrequency: "monthly", priority: 0.6 },
@@ -35,6 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   let countryEntries: MetadataRoute.Sitemap = [];
+  let compareEntries: MetadataRoute.Sitemap = [];
   try {
     const countries = await getAllCountrySlugs();
     countryEntries = countries.map((c) => ({
@@ -43,11 +46,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     }));
+
+    // Only the matchups between the biggest economies are listed. Every
+    // possible pairing would be ~20,000 URLs, which is sitemap spam - the
+    // rest still work, they just are not advertised.
+    const pairs = await getPopularPairs(10);
+    compareEntries = pairs.map((p) => ({
+      url: `${SITE_URL}/compare/${p.pairSlug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
   } catch {
     // If the database is unreachable, still serve the static sitemap
     // rather than returning an error page to the crawler.
     countryEntries = [];
+    compareEntries = [];
   }
 
-  return [...staticEntries, ...countryEntries];
+  return [...staticEntries, ...countryEntries, ...compareEntries];
 }
