@@ -64,7 +64,9 @@ export default function MusicPlayer() {
         preload="none"
       />
 
-      <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
+      {/* bottom-24 on phones clears the fixed tab bar; the desktop
+          position is unchanged. */}
+      <div className="fixed bottom-24 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6 sm:gap-3">
         {isExpanded && (
           <div className="w-56 rounded-2xl border border-white/15 bg-black/80 p-4 text-white shadow-[0_0_30px_rgba(124,58,237,0.2)] backdrop-blur-md sm:w-64">
             <p className="text-xs text-white/40">Now playing</p>

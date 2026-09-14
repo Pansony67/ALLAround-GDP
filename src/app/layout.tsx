@@ -101,7 +101,9 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-black">
+      {/* pb-20 on phones reserves the strip the fixed tab bar sits on,
+          so the footer is never hidden underneath it. */}
+      <body className="flex min-h-full flex-col bg-black pb-20 sm:pb-0">
         {/* Fixed animated backdrop. It sits at z-index -10, so it is
             behind every page. The home page still paints bg-black on
             its own <main>, which keeps the hero video in charge there. */}
