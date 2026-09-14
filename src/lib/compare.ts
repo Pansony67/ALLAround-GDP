@@ -1,6 +1,7 @@
 // src/lib/compare.ts
 import { prisma } from "@/lib/prisma";
 import { countryNameToSlug } from "@/lib/country-slug";
+import { buildPairSlug, parsePairSlug } from "@/lib/compare-slug";
 import type { CountryYear } from "@/lib/country-page";
 
 /* Data for the /compare/[pair] pages.
@@ -9,8 +10,6 @@ import type { CountryYear } from "@/lib/country-page";
    rather than /compare?a=THA&b=VNM - because "thailand vs vietnam gdp" is
    a phrase people actually search for, and only a real URL can rank for
    it or sit in a sitemap. */
-
-export const PAIR_SEPARATOR = "-vs-";
 
 export type ComparedCountry = {
   code: string;
@@ -43,22 +42,15 @@ export type Comparison = {
   leader: "a" | "b" | null;
 };
 
-export function buildPairSlug(slugA: string, slugB: string): string {
-  return `${slugA}${PAIR_SEPARATOR}${slugB}`;
-}
-
-export function parsePairSlug(
-  pair: string
-): { slugA: string; slugB: string } | null {
-  const index = pair.indexOf(PAIR_SEPARATOR);
-  if (index <= 0) return null;
-
-  const slugA = pair.slice(0, index);
-  const slugB = pair.slice(index + PAIR_SEPARATOR.length);
-  if (!slugA || !slugB || slugA === slugB) return null;
-
-  return { slugA, slugB };
-}
+/* PAIR_SEPARATOR, buildPairSlug and parsePairSlug live in
+   lib/compare-slug.ts so that the client-side ComparePicker can use
+   them without dragging Prisma into the browser bundle. They are
+   re-exported here so existing server-side imports keep working. */
+export {
+  PAIR_SEPARATOR,
+  buildPairSlug,
+  parsePairSlug,
+} from "@/lib/compare-slug";
 
 /** All pairings among the biggest economies. These are the comparisons
     worth pre-rendering and listing in the sitemap; any other pairing

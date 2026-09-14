@@ -3,7 +3,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { buildPairSlug } from "@/lib/compare";
+import { buildPairSlug } from "@/lib/compare-slug";
 
 /* Two dropdowns and a button that sends the reader to /compare/a-vs-b.
 
