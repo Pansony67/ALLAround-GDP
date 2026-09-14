@@ -82,6 +82,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Stated explicitly rather than relying on the framework default: without
+  // width=device-width a phone renders the page at ~980px and scales it
+  // down, which makes every text size on the site unreadable.
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#000000",
   colorScheme: "dark",
 };

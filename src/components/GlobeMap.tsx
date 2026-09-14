@@ -124,7 +124,11 @@ export default function GlobeMap() {
     if (!node) return;
     const observer = new ResizeObserver((entries) => {
       const rect = entries[0].contentRect;
-      setSize({ width: rect.width, height: 600 });
+      // A fixed 600px height leaves a small globe stranded in a tall
+      // letterbox on a phone, where the container is only ~340px wide.
+      // Below the sm breakpoint, keep the canvas roughly square instead.
+      const height = rect.width < 640 ? Math.round(rect.width * 1.2) : 600;
+      setSize({ width: rect.width, height });
     });
     observer.observe(node);
     return () => observer.disconnect();
@@ -362,7 +366,7 @@ export default function GlobeMap() {
             )}
           </div>
 
-          <div className="mt-5 grid grid-cols-3 gap-4 text-sm">
+          <div className="mt-5 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3 sm:gap-4">
             <div className="rounded-2xl border border-white/5 bg-white/5 p-4">
               <p className="text-white/50">GDP</p>
               <p className="mt-1 text-xl font-medium">
