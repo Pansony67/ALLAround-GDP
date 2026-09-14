@@ -233,7 +233,7 @@ function ScrollySteps({
   void onlyActiveMatters;
 
   return (
-    <div className="flex flex-col gap-[28vh] py-[12vh] lg:gap-[40vh] lg:py-[20vh]">
+    <div className="flex flex-col gap-6 py-4 lg:gap-[40vh] lg:py-[20vh]">
       {steps.map((step, i) => (
         <div
           key={step.year}
@@ -243,7 +243,7 @@ function ScrollySteps({
           className={`relative overflow-hidden rounded-3xl border backdrop-blur-sm transition-all duration-500 ${
             active === i
               ? "border-violet-400/50 opacity-100"
-              : "border-white/5 opacity-40"
+              : "border-white/5 opacity-100 lg:opacity-40"
           }`}
         >
           {/* Faint earth background on every card */}
@@ -642,7 +642,11 @@ export default function HistoryExplorer() {
           </div>
 
           <div className="lg:grid lg:gap-10 lg:grid-cols-2">
-            <div className="sticky top-16 z-20 mb-6 lg:top-24 lg:mb-0 lg:h-fit">
+            {/* Not sticky on a phone. Pinned, this panel is ~500px of a
+                740px screen, so the story below it scrolls through a
+                200px slot. It stays sticky from lg up, where the
+                two-column scrollytelling layout has room for it. */}
+            <div className="mb-6 lg:sticky lg:top-24 lg:z-20 lg:mb-0 lg:h-fit">
               <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-slate-950/95 p-4 backdrop-blur-md sm:p-6 lg:bg-white/5 lg:backdrop-blur-sm">
                 {/* Decorative dot pattern */}
                 <div
@@ -749,7 +753,8 @@ export default function HistoryExplorer() {
           )}
           {selectedCountry && (
             <div className="lg:grid lg:gap-10 lg:grid-cols-2">
-              <div className="sticky top-16 z-20 mb-6 lg:top-24 lg:mb-0 lg:h-fit">
+              {/* Not sticky on a phone - see the note in world mode. */}
+              <div className="mb-6 lg:sticky lg:top-24 lg:z-20 lg:mb-0 lg:h-fit">
                 <div className="rounded-3xl border border-white/10 bg-slate-950/95 p-4 backdrop-blur-md sm:p-6 lg:bg-white/5 lg:backdrop-blur-sm">
                   <p className="mb-2 text-sm text-white/50">
                     {selectedCountry.name} GDP over time
