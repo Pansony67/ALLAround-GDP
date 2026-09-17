@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Space_Grotesk } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/structured-data";
 import CompareChart, {
   COMPARE_COLOR_A,
   COMPARE_COLOR_B,
@@ -160,6 +162,17 @@ export default async function ComparePairPage({
     <main
       className={`${displayFont.variable} relative min-h-screen px-6 pb-12 pt-28 text-white sm:px-10`}
     >
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Compare", path: "/compare" },
+          {
+            name: `${data.a.name} vs ${data.b.name}`,
+            path: `/compare/${pair}`,
+          },
+        ])}
+      />
+
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
         <div className="absolute right-1/4 top-1/2 h-[500px] w-[500px] translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />

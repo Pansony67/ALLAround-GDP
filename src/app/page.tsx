@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { Space_Grotesk, Inter } from "next/font/google";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import JsonLd from "@/components/JsonLd";
+import { datasetJsonLd } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -47,6 +49,10 @@ export default function HomePage() {
       className={`${displayFont.variable} ${inter.variable} relative overflow-x-hidden bg-black`}
       style={{ fontFamily: "var(--font-inter)" }}
     >
+      {/* Describes the data itself, which is what gets this site listed
+          in Google Dataset Search - a separate place people look for
+          numbers, not just a better-looking web result. */}
+      <JsonLd data={datasetJsonLd()} />
       {/* Galaxy glow background for the lower sections */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-[120vh] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[120px]" />

@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MusicPlayer from "@/components/MusicPlayer";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import JsonLd from "@/components/JsonLd";
+import { websiteJsonLd } from "@/lib/structured-data";
 import SiteBackground from "@/components/SiteBackground";
 import "./globals.css";
 
@@ -62,6 +64,18 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     url: SITE_URL,
     locale: "en_US",
+    /* The default share image for every page that does not generate its
+       own. Without it, a link to /rankings or /history posted in LINE,
+       Messenger or Slack renders as a bare grey box. Pages with their
+       own opengraph-image.tsx (home, country, compare) override this. */
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} - Explore the World Economy`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -107,6 +121,8 @@ export default function RootLayout({
         {/* Fixed animated backdrop. It sits at z-index -10, so it is
             behind every page. The home page still paints bg-black on
             its own <main>, which keeps the hero video in charge there. */}
+        {/* Site identity for search engines. Rendered once, site-wide. */}
+        <JsonLd data={websiteJsonLd()} />
         <SiteBackground />
         <Navbar />
         {/* flex-1 keeps the footer at the bottom of short pages instead

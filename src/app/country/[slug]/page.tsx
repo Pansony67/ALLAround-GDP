@@ -4,6 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Space_Grotesk } from "next/font/google";
 import CountryGdpChart from "@/components/CountryGdpChart";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/structured-data";
 import { codeToFlag } from "@/lib/flag";
 import { wikipediaEconomyUrl } from "@/lib/wikipedia";
 import { getCountryNarrative } from "@/lib/country-narratives";
@@ -132,6 +134,16 @@ export default async function CountryPage({
     <main
       className={`${displayFont.variable} relative min-h-screen px-6 pb-12 pt-28 text-white sm:px-10`}
     >
+      {/* Machine-readable version of the breadcrumb below, so the search
+          result shows Home > Countries > <country> instead of the URL. */}
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Countries", path: "/country" },
+          { name: `${data.name} GDP`, path: `/country/${slug}` },
+        ])}
+      />
+
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-purple-600/20 blur-[130px]" />
         <div className="absolute right-1/4 top-1/2 h-[500px] w-[500px] translate-x-1/2 rounded-full bg-blue-600/20 blur-[130px]" />
