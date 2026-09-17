@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Orbitron } from "next/font/google";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export const metadata: Metadata = {
     title: "Games - ALLAround GDP",
     description:
       "Test how well you really know the world economy with quick games built on real GDP data.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

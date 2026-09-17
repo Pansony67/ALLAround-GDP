@@ -5,6 +5,7 @@ import { Space_Grotesk } from "next/font/google";
 import ComparePicker from "@/components/ComparePicker";
 import { getAllCountrySlugs } from "@/lib/country-page";
 import { getPopularPairs } from "@/lib/compare";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     description:
       "Put any two countries side by side: GDP, growth, GDP per capita and 35 years of history.",
     url: "/compare",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
 import { codeToFlag } from "@/lib/flag";
 import { getAllCountrySlugs } from "@/lib/country-page";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
     title: "All Countries - ALLAround GDP",
     description:
       "Browse GDP, growth and GDP per capita for every country, from World Bank data.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

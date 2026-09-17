@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import NewsImage from "@/components/NewsImage";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -63,6 +64,7 @@ export const metadata: Metadata = {
     title: "News - ALLAround GDP",
     description:
       "The latest economy, business and finance headlines from around the world, updated continuously.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import GlobeMap from "@/components/GlobeMapLazy";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     title: "Globe - ALLAround GDP",
     description:
       "Spin an interactive 3D globe and click any country to see its GDP, growth rate and GDP per capita, straight from World Bank data.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

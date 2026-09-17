@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
 import HigherLowerGame from "@/components/HigherLowerGame";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     title: "Higher / Lower - ALLAround GDP",
     description:
       "Guess whether the next country's GDP is higher or lower, and see how long a streak you can build.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

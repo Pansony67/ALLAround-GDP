@@ -90,3 +90,20 @@ export function breadcrumbJsonLd(
     })),
   };
 }
+
+/**
+ * Fallback share image, for pages that do not generate their own card.
+ *
+ * Next.js replaces the whole `openGraph` object when a page declares
+ * one, rather than merging field by field - so a page that sets only a
+ * title and description silently loses the image declared in the root
+ * layout. Every such page spreads this in explicitly.
+ */
+export const DEFAULT_OG_IMAGE = [
+  {
+    url: "/opengraph-image",
+    width: 1200,
+    height: 630,
+    alt: `${SITE_NAME} - Explore the World Economy`,
+  },
+];

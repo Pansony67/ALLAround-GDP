@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Space_Grotesk } from "next/font/google";
 import HistoryExplorer from "@/components/HistoryExplorer";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
     title: "History - ALLAround GDP",
     description:
       "Track how any country's GDP has changed from 1990 to today, and compare economies side by side across 35 years of World Bank data.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

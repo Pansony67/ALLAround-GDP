@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Space_Grotesk } from "next/font/google";
 import { codeToFlag } from "@/lib/flag";
 import { formatPct, formatPerCapita, formatUsd } from "@/lib/country-page";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 import {
   getRankings,
   MIN_GDP_FOR_RATE_RANKINGS,
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
     description:
       "The largest economies, the fastest growing, and the highest GDP per capita, ranked from World Bank data.",
     url: "/rankings",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 

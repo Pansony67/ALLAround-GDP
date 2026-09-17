@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import PromptPayQR from "@/components/PromptPayQR";
+import { DEFAULT_OG_IMAGE } from "@/lib/structured-data";
 
 const displayFont = Space_Grotesk({
   subsets: ["latin"],
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
     title: "Support the Project - ALLAround GDP",
     description:
       "ALLAround GDP is free and open. Support the project via PayPal or PromptPay to help keep it running.",
+    images: DEFAULT_OG_IMAGE,
   },
 };
 
